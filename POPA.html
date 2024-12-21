@@ -1,1 +1,89 @@
-popa
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Диалоговое окно</title>
+    <style>
+        /* Простые стили для кнопок и окна */
+        #dialog {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            border: 2px solid #000;
+            background-color: #fff;
+            z-index: 1000;
+        }
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+<div id="overlay"></div>
+<div id="dialog">
+    <p>Уважени еметс дон?</p>
+    <button id="yesButton">еметс дон</button>
+    <button id="noButton">не еметс</button>
+    <p id="timerMessage" style="display:none;"></p>
+</div>
+
+<script>
+    // Функция для показа диалогового окна
+    function showDialog() {
+        document.getElementById('overlay').style.display = 'block';
+        document.getElementById('dialog').style.display = 'block';
+    }
+
+    // Обработчик для первой кнопки
+    document.getElementById('yesButton').onclick = function() {
+        alert('красаучег дон');
+        hideDialog();
+    }
+
+    // Обработчик для второй кнопки
+    document.getElementById('noButton').onclick = function() {
+        hideDialog();
+        startTimer(10); // Запускаем таймер на 10 секунд
+    }
+
+    // Функция для скрытия диалогового окна
+    function hideDialog() {
+        document.getElementById('overlay').style.display = 'none';
+        document.getElementById('dialog').style.display = 'none';
+    }
+
+    // Функция для запуска таймера
+    function startTimer(duration) {
+        let timerMessage = document.getElementById('timerMessage');
+        timerMessage.style.display = 'block';
+        let timer = duration, seconds;
+        let interval = setInterval(() => {
+            seconds = parseInt(timer % 60, 10);
+            timerMessage.innerHTML = 'Ожидание: ' + seconds + ' секунд';
+
+            if (--timer < 0) {
+                clearInterval(interval);
+                alert('Братух, ты где?');
+                timerMessage.style.display = 'none'; // Скрываем таймер после завершения
+            }
+        }, 1000);
+    }
+
+    // Показываем диалоговое окно при загрузке страницы
+    window.onload = showDialog;
+</script>
+
+</body>
+</html>
